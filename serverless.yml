@@ -1,0 +1,33 @@
+service: eventTickets-serverless
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: MarkoRole
+  region: eu-north-1
+  iam:
+    role: arn:aws:iam::228421314153:role/events-practice
+
+plugins:
+  - serverless-webpack
+
+
+# Each Lambda function packs for it's-
+# -own independent function
+package:
+  individually: true
+
+functions:
+  getAllEvents:
+    handler: functions/getAllEvents/index.handler
+    events:
+      - httpApi:
+          path: '/allEvents'
+          method: GET
+  postTicket:
+    handler: functions/postEvent/index.handler
+    events:
+      - httpApi:
+          path: '/allEvents'
+          method: POST
