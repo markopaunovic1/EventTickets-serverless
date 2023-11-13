@@ -25,9 +25,59 @@ functions:
       - httpApi:
           path: '/allEvents'
           method: GET
-  postTicket:
+
+  postEvent:
     handler: functions/postEvent/index.handler
     events:
       - httpApi:
           path: '/allEvents'
           method: POST
+
+  getTicket:
+    handler: functions/getTicket/index.handler
+    events:
+      - httpApi:
+          path: '/getTicket'
+          method: GET
+
+  postTicket:
+    handler: functions/postTicket/index.handler
+    events:
+      - httpApi:
+          path: '/postTicket'
+          method: POST
+          
+  getTicketById:
+    handler: functions/getTicketById/index.handler
+    events:
+      - httpApi:
+          path: '/getTicket/{ticketId}'
+          method: GET
+
+resources:
+  Resources:
+    eventsDB:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: events-db
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    ticketDB:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ticket-db
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+
+
